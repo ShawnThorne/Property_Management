@@ -4,8 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrganizationResource\Pages;
 use App\Filament\Resources\OrganizationResource\RelationManagers;
+use App\Filament\Resources\OrganizationResource\RelationManagers\DocumentsRelationManager;
 use App\Models\Organization;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,7 +19,7 @@ class OrganizationResource extends Resource
 {
     protected static ?string $model = Organization::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-c-computer-desktop';
 
     public static function form(Form $form): Form
     {
@@ -60,7 +62,7 @@ class OrganizationResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            DocumentsRelationManager::class,
         ];
     }
 

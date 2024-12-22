@@ -4,10 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Storage;
 
-class Organization extends Model
+class Photo extends Model
 {
     use HasFactory;
 
@@ -18,6 +17,7 @@ class Organization extends Model
      */
     protected $fillable = [
         'name',
+        'path',
     ];
 
     /**
@@ -27,16 +27,17 @@ class Organization extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'documents' => 'array',
     ];
 
-    public function properties(): HasMany
+    public function owner()
     {
-        return $this->hasMany(Property::class);
+        $this->morphTo();
     }
 
-    public function documents(): MorphMany
+    protected static function booted(): void
     {
-        return $this->morphMany(Document::class, 'owner');
+        static::deleting(function ($photo) {
+            Storage::disk('public')->delete($photo->path);
+        });
     }
 }

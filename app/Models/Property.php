@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Property extends Model
 {
@@ -43,5 +44,15 @@ class Property extends Model
     public function propertyRooms(): HasMany
     {
         return $this->hasMany(PropertyRoom::class);
+    }
+
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'owner');
+    }
+
+    public function photos(): MorphMany
+    {
+        return $this->morphMany(Photo::class, 'owner');
     }
 }

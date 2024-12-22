@@ -3,9 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PropertyResource\Pages;
-use App\Filament\Resources\PropertyResource\RelationManagers;
+use App\Filament\Resources\PropertyResource\RelationManagers\DocumentsRelationManager;
+use App\Filament\Resources\PropertyResource\RelationManagers\PhotosRelationManager;
+use App\Filament\Resources\PropertyResource\RelationManagers\PropertyRoomsRelationManager;
 use App\Models\Property;
 use Filament\Forms;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -17,7 +20,7 @@ class PropertyResource extends Resource
 {
     protected static ?string $model = Property::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-home';
 
     public static function form(Form $form): Form
     {
@@ -26,9 +29,7 @@ class PropertyResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('about')
-                    ->required()
-                    ->maxLength(255),
+                Textarea::make('about'),
                 Forms\Components\TextInput::make('address')
                     ->required()
                     ->maxLength(255),
@@ -82,7 +83,9 @@ class PropertyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            DocumentsRelationManager::class,
+            PropertyRoomsRelationManager::class,
+            PhotosRelationManager::class
         ];
     }
 

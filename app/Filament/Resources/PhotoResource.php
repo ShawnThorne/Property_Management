@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\OccupantResource\Pages;
-use App\Filament\Resources\OccupantResource\RelationManagers;
-use App\Models\Occupant;
+use App\Filament\Resources\PhotoResource\Pages;
+use App\Filament\Resources\PhotoResource\RelationManagers;
+use App\Models\Photo;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class OccupantResource extends Resource
+class PhotoResource extends Resource
 {
-    protected static ?string $model = Occupant::class;
+    protected static ?string $model = Photo::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -28,9 +28,15 @@ class OccupantResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('room_id')
-                    ->relationship('room', 'id')
-                    ->required(),
+                Forms\Components\TextInput::make('path')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('owner_type')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('owner_id')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -40,7 +46,11 @@ class OccupantResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('room.id')
+                Tables\Columns\TextColumn::make('path')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('owner_type')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('owner_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -75,9 +85,9 @@ class OccupantResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListOccupants::route('/'),
-            'create' => Pages\CreateOccupant::route('/create'),
-            'edit' => Pages\EditOccupant::route('/{record}/edit'),
+            'index' => Pages\ListPhotos::route('/'),
+            'create' => Pages\CreatePhoto::route('/create'),
+            'edit' => Pages\EditPhoto::route('/{record}/edit'),
         ];
     }
 }
