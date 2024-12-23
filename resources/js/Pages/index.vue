@@ -1,13 +1,14 @@
 <script setup>
+import { initFlowbite } from 'flowbite';
 import Layout from './Layout/Layout.vue'
-import { Head } from '@inertiajs/vue3'
 
 defineProps({ user: Object })
+
 </script>
 
 <template>
   <Layout>
     <h1>Welcome</h1>
-    <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
+    <div class="text-xl font-bold">Hello {{ user.name }}, welcome to your first Inertia app!</div>
   </Layout>
 </template>
