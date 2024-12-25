@@ -1,14 +1,20 @@
 <?php
 
+use App\Models\Organization;
+use App\Models\Property;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
+    return Inertia::render('index');
+});
 
-    $user = User::first();
+Route::get('/properties', function() {
 
-    return Inertia::render('index', [
-        'user' => $user
+    $properties = Property::all();
+
+    return Inertia::render('Properties',[
+        'properties' => $properties
     ]);
 });

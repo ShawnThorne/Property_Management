@@ -3,6 +3,7 @@ import './bootstrap';
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import 'flowbite';
+import '../../node_modules/flowbite-vue/dist/index.css'
 
 createInertiaApp({
   resolve: name => {
