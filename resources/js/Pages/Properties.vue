@@ -1,8 +1,8 @@
 
 <template>
   <Layout>
-    <div v-for="(property, index) in properties" :key="property.id">
-      <PropertyCard :property="property"/>
+    <div class="flex flex-col gap-8" v-for="(property, index) in properties" :key="property.id">
+      <PropertyCard :property="property" :index="index"/>
     </div>
   </Layout>
 </template>
@@ -11,6 +11,6 @@ import PropertyCard from '../Components/PropertyCard.vue';
 import Layout from './Layout/Layout.vue';
 
 const props = defineProps({
-  properties:Array
+  properties:Array<Object>
 })
 </script>

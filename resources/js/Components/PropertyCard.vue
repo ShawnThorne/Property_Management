@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-2">
     <div class="h-full w-full aspect-square flex justify-center items-center"
-          :class="index && index > 0 && index % 2 === 0 ? 'order-last':''">
+          :class="index && index > 0 && index % 2 === 1 ? 'order-last':''">
       image
       {{index}}
     </div>
@@ -18,7 +18,7 @@
   const props = defineProps({
     property:Object,
     index: {
-      default: false
+      required: true
     }
   });
 </script>

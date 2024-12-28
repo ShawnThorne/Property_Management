@@ -6,7 +6,7 @@ import Layout from './Layout/Layout.vue'
 
 <template>
   <Layout>
-    <div class="flex flex-col justify-center gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:mt-12 gap-8">
       <div class="flex flex-col justify-center items-center">
         <div>
           <svg class="w-[120px] h-[120px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
