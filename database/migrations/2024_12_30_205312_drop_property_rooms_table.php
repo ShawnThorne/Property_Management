@@ -37,7 +37,6 @@ return new class extends Migration
             $table->foreignId('room_id')->constrained('property_rooms');
         });
 
-
         Schema::enableForeignKeyConstraints();
     }
 };

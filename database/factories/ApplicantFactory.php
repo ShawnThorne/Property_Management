@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Applicant;
 use App\Models\Organization;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ApplicantFactory extends Factory
 {

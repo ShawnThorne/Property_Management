@@ -15,7 +15,7 @@ return new class extends Migration
             $table->foreignId('occupant_id')->nullable()->constrained();
         });
 
-        Schema::table('occupants', function(Blueprint $table){
+        Schema::table('occupants', function (Blueprint $table) {
             $table->string('email')->after('name')->unique();
             $table->string('phone')->after('email')->unique();
             $table->text('notes')->after('phone')->nullable();
@@ -33,7 +33,7 @@ return new class extends Migration
             $table->dropConstrainedForeignId('occupant_id');
         });
 
-        Schema::table('occupants', function(Blueprint $table){
+        Schema::table('occupants', function (Blueprint $table) {
             $table->dropColumn('email');
             $table->dropColumn('phone');
             $table->dropColumn('notes');

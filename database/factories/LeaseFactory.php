@@ -2,11 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Lease;
 use App\Models\Occupant;
 use App\Models\Property;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LeaseFactory extends Factory
 {

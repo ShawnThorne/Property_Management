@@ -37,7 +37,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'organization' => fn () => Organization::first()
+            'organization' => fn () => Organization::first(),
         ]);
     }
 }

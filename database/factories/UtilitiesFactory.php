@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Property;
 use App\Models\Utilities;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UtilitiesFactory extends Factory
 {

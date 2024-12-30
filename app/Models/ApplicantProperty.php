@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ApplicantProperty extends Model
 {
-
-    protected $table='applicant_property';
+    protected $table = 'applicant_property';
 
     use HasFactory;
 
