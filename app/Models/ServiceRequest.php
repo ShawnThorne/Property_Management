@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
-class Occupant extends Model
+class ServiceRequest extends Model
 {
     use HasFactory;
 
@@ -18,8 +17,10 @@ class Occupant extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'room_id',
+        'description',
+        'status',
+        'occupant_id',
+        'urgency',
     ];
 
     /**
@@ -29,21 +30,16 @@ class Occupant extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'room_id' => 'integer',
+        'occupant_id' => 'integer',
     ];
 
-    public function leases(): HasMany
+    public function occupant(): BelongsTo
     {
-        return $this->hasMany(Lease::class);
+        return $this->belongsTo(Occupant::class);
     }
 
-    public function docuemnts(): MorphMany
+    public function property(): HasOneThrough
     {
-        return $this->morphMany(Document::class, 'owner');
-    }
-
-    public function photos(): MorphMany
-    {
-        return $this->morphMany(Photo::class, 'owner');
+        return $this->hasOneThrough(Property::class, Occupant::class);
     }
 }

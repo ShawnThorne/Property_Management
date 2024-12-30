@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PropertyResource\Pages;
-use App\Filament\Resources\PropertyResource\RelationManagers;
-use App\Models\Property;
+use App\Filament\Resources\ServiceRequestResource\Pages;
+use App\Filament\Resources\ServiceRequestResource\RelationManagers;
+use App\Models\ServiceRequest;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PropertyResource extends Resource
+class ServiceRequestResource extends Resource
 {
-    protected static ?string $model = Property::class;
+    protected static ?string $model = ServiceRequest::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,20 +23,18 @@ class PropertyResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\Textarea::make('description')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('about')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('address')
+                Forms\Components\TextInput::make('status')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('num_of_baths')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\Select::make('organization_id')
-                    ->relationship('organization', 'name')
+                Forms\Components\Select::make('occupant_id')
+                    ->relationship('occupant', 'name')
                     ->required(),
+                Forms\Components\TextInput::make('urgency')
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 
@@ -44,16 +42,13 @@ class PropertyResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('status')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('address')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('num_of_baths')
+                Tables\Columns\TextColumn::make('occupant.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('organization.name')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('urgency')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -86,9 +81,9 @@ class PropertyResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProperties::route('/'),
-            'create' => Pages\CreateProperty::route('/create'),
-            'edit' => Pages\EditProperty::route('/{record}/edit'),
+            'index' => Pages\ListServiceRequests::route('/'),
+            'create' => Pages\CreateServiceRequest::route('/create'),
+            'edit' => Pages\EditServiceRequest::route('/{record}/edit'),
         ];
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PropertyResource\Pages;
-use App\Filament\Resources\PropertyResource\RelationManagers;
-use App\Models\Property;
+use App\Filament\Resources\PaymentResource\Pages;
+use App\Filament\Resources\PaymentResource\RelationManagers;
+use App\Models\Payment;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PropertyResource extends Resource
+class PaymentResource extends Resource
 {
-    protected static ?string $model = Property::class;
+    protected static ?string $model = Payment::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,19 +23,21 @@ class PropertyResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('about')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('address')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('num_of_baths')
+                Forms\Components\TextInput::make('amount')
                     ->required()
                     ->numeric(),
-                Forms\Components\Select::make('organization_id')
-                    ->relationship('organization', 'name')
+                Forms\Components\TextInput::make('type')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('notes')
+                    ->columnSpanFull(),
+                Forms\Components\Toggle::make('is_paid')
+                    ->required(),
+                Forms\Components\DateTimePicker::make('invoice_date'),
+                Forms\Components\DateTimePicker::make('paid_date'),
+                Forms\Components\Select::make('occupant_id')
+                    ->relationship('occupant', 'name')
+                    ->searchable()
                     ->required(),
             ]);
     }
@@ -44,14 +46,20 @@ class PropertyResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('address')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('num_of_baths')
+                Tables\Columns\TextColumn::make('amount')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('organization.name')
+                Tables\Columns\TextColumn::make('type')
+                    ->searchable(),
+                Tables\Columns\IconColumn::make('is_paid')
+                    ->boolean(),
+                Tables\Columns\TextColumn::make('invoice_date')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('paid_date')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('occupant.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -86,9 +94,9 @@ class PropertyResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProperties::route('/'),
-            'create' => Pages\CreateProperty::route('/create'),
-            'edit' => Pages\EditProperty::route('/{record}/edit'),
+            'index' => Pages\ListPayments::route('/'),
+            'create' => Pages\CreatePayment::route('/create'),
+            'edit' => Pages\EditPayment::route('/{record}/edit'),
         ];
     }
 }

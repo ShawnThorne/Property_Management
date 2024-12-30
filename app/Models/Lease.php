@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class PropertyRoom extends Model
+class Lease extends Model
 {
     use HasFactory;
 
@@ -17,8 +17,11 @@ class PropertyRoom extends Model
      * @var array
      */
     protected $fillable = [
-        'room_designation',
-        'num_of_occupants',
+        'start_date',
+        'end_date',
+        'price_month',
+        'deposit',
+        'occupant_id',
         'property_id',
     ];
 
@@ -29,17 +32,26 @@ class PropertyRoom extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'num_of_occupants' => 'integer',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+        'price_month' => 'decimal:2',
+        'deposit' => 'decimal:2',
+        'occupant_id' => 'integer',
         'property_id' => 'integer',
     ];
+
+    public function occupant(): BelongsTo
+    {
+        return $this->belongsTo(Occupant::class);
+    }
 
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);
     }
 
-    public function occupants(): HasMany
+    public function documents(): MorphMany
     {
-        return $this->hasMany(Occupant::class);
+        return $this->morphMany(Document::class, 'owner');
     }
 }

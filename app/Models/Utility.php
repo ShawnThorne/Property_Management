@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-class Occupant extends Model
+class Utility extends Model
 {
     use HasFactory;
 
@@ -19,7 +17,9 @@ class Occupant extends Model
      */
     protected $fillable = [
         'name',
-        'room_id',
+        'description',
+        'price',
+        'property_id',
     ];
 
     /**
@@ -29,21 +29,12 @@ class Occupant extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'room_id' => 'integer',
+        'price' => 'decimal:2',
+        'property_id' => 'integer',
     ];
 
-    public function leases(): HasMany
+    public function property(): BelongsTo
     {
-        return $this->hasMany(Lease::class);
-    }
-
-    public function docuemnts(): MorphMany
-    {
-        return $this->morphMany(Document::class, 'owner');
-    }
-
-    public function photos(): MorphMany
-    {
-        return $this->morphMany(Photo::class, 'owner');
+        return $this->belongsTo(Property::class);
     }
 }

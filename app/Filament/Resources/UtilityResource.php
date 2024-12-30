@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PropertyRoomResource\Pages;
-use App\Filament\Resources\PropertyRoomResource\RelationManagers;
-use App\Models\PropertyRoom;
+use App\Filament\Resources\UtilityResource\Pages;
+use App\Filament\Resources\UtilityResource\RelationManagers;
+use App\Models\Utility;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,24 +13,26 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PropertyRoomResource extends Resource
+class UtilityResource extends Resource
 {
-    protected static ?string $model = PropertyRoom::class;
+    protected static ?string $model = Utility::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('room_designation')
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('description')
                     ->maxLength(255)
                     ->default(null),
-                Forms\Components\TextInput::make('num_of_occupants')
+                Forms\Components\TextInput::make('price')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->prefix('$'),
                 Forms\Components\Select::make('property_id')
                     ->relationship('property', 'name')
                     ->required(),
@@ -41,10 +43,12 @@ class PropertyRoomResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('room_designation')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('num_of_occupants')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('description')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('price')
+                    ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('property.name')
                     ->numeric()
@@ -54,6 +58,10 @@ class PropertyRoomResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -81,9 +89,9 @@ class PropertyRoomResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPropertyRooms::route('/'),
-            'create' => Pages\CreatePropertyRoom::route('/create'),
-            'edit' => Pages\EditPropertyRoom::route('/{record}/edit'),
+            'index' => Pages\ListUtilities::route('/'),
+            'create' => Pages\CreateUtility::route('/create'),
+            'edit' => Pages\EditUtility::route('/{record}/edit'),
         ];
     }
 }

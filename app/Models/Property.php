@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Property extends Model
@@ -41,11 +41,6 @@ class Property extends Model
         return $this->belongsTo(Organization::class);
     }
 
-    public function propertyRooms(): HasMany
-    {
-        return $this->hasMany(PropertyRoom::class);
-    }
-
     public function documents(): MorphMany
     {
         return $this->morphMany(Document::class, 'owner');
@@ -54,5 +49,10 @@ class Property extends Model
     public function photos(): MorphMany
     {
         return $this->morphMany(Photo::class, 'owner');
+    }
+
+    public function applicants(): BelongsToMany
+    {
+        return $this->belongsToMany(Applicant::class);
     }
 }
