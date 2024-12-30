@@ -21,7 +21,7 @@ class Lease extends Model
         'end_date',
         'price_month',
         'deposit',
-        'occupant_id',
+        'user_id',
         'property_id',
     ];
 
@@ -36,13 +36,13 @@ class Lease extends Model
         'end_date' => 'datetime',
         'price_month' => 'decimal:2',
         'deposit' => 'decimal:2',
-        'occupant_id' => 'integer',
+        'user_id' => 'integer',
         'property_id' => 'integer',
     ];
 
-    public function occupant(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Occupant::class);
+        return $this->belongsTo(User::class);
     }
 
     public function property(): BelongsTo

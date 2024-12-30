@@ -22,7 +22,7 @@ class Payment extends Model
         'is_paid',
         'invoice_date',
         'paid_date',
-        'occupant_id',
+        'user_id',
     ];
 
     /**
@@ -36,11 +36,11 @@ class Payment extends Model
         'is_paid' => 'boolean',
         'invoice_date' => 'datetime',
         'paid_date' => 'datetime',
-        'occupant_id' => 'integer',
+        'user_id' => 'integer',
     ];
 
-    public function occupant(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Occupant::class);
+        return $this->belongsTo(User::class);
     }
 }

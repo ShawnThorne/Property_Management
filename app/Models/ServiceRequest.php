@@ -19,7 +19,7 @@ class ServiceRequest extends Model
     protected $fillable = [
         'description',
         'status',
-        'occupant_id',
+        'user_id',
         'urgency',
     ];
 
@@ -30,16 +30,16 @@ class ServiceRequest extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'occupant_id' => 'integer',
+        'user_id' => 'integer',
     ];
 
-    public function occupant(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Occupant::class);
+        return $this->belongsTo(User::class);
     }
 
     public function property(): HasOneThrough
     {
-        return $this->hasOneThrough(Property::class, Occupant::class);
+        return $this->hasOneThrough(Property::class, User::class);
     }
 }
