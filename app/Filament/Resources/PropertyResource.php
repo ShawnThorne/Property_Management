@@ -31,6 +31,9 @@ class PropertyResource extends Resource
                 Forms\Components\TextInput::make('num_of_baths')
                     ->required()
                     ->numeric(),
+                Forms\Components\TextInput::make('num_of_spaces')
+                    ->required()
+                    ->numeric(),
                 Forms\Components\Select::make('organization_id')
                     ->relationship('organization', 'name')
                     ->required(),
@@ -48,7 +51,7 @@ class PropertyResource extends Resource
                 Tables\Columns\TextColumn::make('num_of_baths')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('organization.name')
+                Tables\Columns\TextColumn::make('num_of_spaces')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

@@ -8,10 +8,14 @@ use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Set;
+use Filament\Forms\Get;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\Applicant;
 
 class UserResource extends Resource
 {
@@ -30,7 +34,6 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('phone')
                     ->tel()
                     ->required()
@@ -38,10 +41,24 @@ class UserResource extends Resource
                 Forms\Components\Textarea::make('notes')
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('is_admin')
+                    ->live(onBlur:true)
                     ->required(),
                 Forms\Components\Select::make('applicant_id')
                     ->relationship('applicant', 'name')
-                    ->default(null),
+                    ->searchable()
+                    ->preload()
+                    ->default(null)
+                    ->live(onBlur: true)
+                    ->hidden(fn (Get $get) => $get('is_admin'))
+                    ->afterStateUpdated(function (?string $state, ?Set $set) {
+                        $applicant = Applicant::find($state);
+                        if (!empty($applicant)) {
+                            $set('name', $applicant->name);
+                            $set('email', $applicant->email);
+                            $set('phone', $applicant->phone);
+                            $set('is_admin', false);
+                        }
+                    }),
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()
@@ -63,9 +80,7 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('phone')
                     ->searchable(),
                 Tables\Columns\IconColumn::make('is_admin')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('applicant_id')
-                    ->numeric()
+                    ->boolean()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

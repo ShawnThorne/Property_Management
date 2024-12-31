@@ -23,6 +23,7 @@ class Property extends Model
         'about',
         'address',
         'num_of_baths',
+        'num_of_spaces',
         'organization_id',
     ];
 
@@ -34,6 +35,7 @@ class Property extends Model
     protected $casts = [
         'id' => 'integer',
         'num_of_baths' => 'float',
+        'num_of_spaces' => 'integer',
         'organization_id' => 'integer',
     ];
 

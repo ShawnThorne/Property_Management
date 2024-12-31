@@ -9,6 +9,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Support\RawJs;
 
 class LeaseResource extends Resource
 {
@@ -20,19 +22,26 @@ class LeaseResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\DateTimePicker::make('start_date')
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name', modifyQueryUsing: fn (Builder $query) => $query->where('is_admin', false))
+                    ->searchable()
+                    ->label('Tenant For Lease')
+                    ->preload()
                     ->required(),
-                Forms\Components\DateTimePicker::make('end_date')
+                Forms\Components\DatePicker::make('start_date')
+                    ->required(),
+                Forms\Components\DatePicker::make('end_date')
                     ->required(),
                 Forms\Components\TextInput::make('price_month')
                     ->required()
+                    ->mask(RawJs::make('$money($input)'))
+                    ->stripCharacters(',')
                     ->numeric(),
                 Forms\Components\TextInput::make('deposit')
                     ->required()
+                    ->mask(RawJs::make('$money($input)'))
+                    ->stripCharacters(',')
                     ->numeric(),
-                Forms\Components\Select::make('occupant_id')
-                    ->relationship('occupant', 'name')
-                    ->required(),
                 Forms\Components\Select::make('property_id')
                     ->relationship('property', 'name')
                     ->required(),
@@ -55,7 +64,7 @@ class LeaseResource extends Resource
                 Tables\Columns\TextColumn::make('deposit')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('occupant.name')
+                Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('property.name')
