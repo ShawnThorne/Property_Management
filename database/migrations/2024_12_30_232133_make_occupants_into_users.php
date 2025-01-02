@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function(Blueprint $table){
+        Schema::table('users', function (Blueprint $table) {
             $table->string('phone')->after('email_verified_at')->unique();
             $table->text('notes')->after('phone')->nullable();
             $table->boolean('is_admin')->after('notes')->default(false);
@@ -19,22 +19,22 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        Schema::table('payments', function(Blueprint $table){
+        Schema::table('payments', function (Blueprint $table) {
             $table->foreignId('user_id')->after('occupant_id')->constrained()->cascadeOnDelete();
             $table->dropConstrainedForeignId('occupant_id');
         });
 
-        Schema::table('leases', function(Blueprint $table){
+        Schema::table('leases', function (Blueprint $table) {
             $table->foreignId('user_id')->after('occupant_id')->constrained()->cascadeOnDelete();
             $table->dropConstrainedForeignId('occupant_id');
         });
 
-        Schema::table('service_requests', function(Blueprint $table){
+        Schema::table('service_requests', function (Blueprint $table) {
             $table->foreignId('user_id')->after('occupant_id')->constrained()->cascadeOnDelete();
             $table->dropConstrainedForeignId('occupant_id');
         });
 
-        Schema::table('applicants', function(Blueprint $table){
+        Schema::table('applicants', function (Blueprint $table) {
             $table->dropConstrainedForeignId('occupant_id');
         });
 
@@ -47,7 +47,7 @@ return new class extends Migration
     public function down(): void
     {
 
-        Schema::create('occupants', function(Blueprint $table){
+        Schema::create('occupants', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
@@ -58,7 +58,7 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        Schema::table('users', function(Blueprint $table){
+        Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('phone');
             $table->dropColumn('notes');
             $table->dropColumn('is_admin');
@@ -66,22 +66,22 @@ return new class extends Migration
             $table->dropSoftDeletes();
         });
 
-        Schema::table('payments', function(Blueprint $table){
+        Schema::table('payments', function (Blueprint $table) {
             $table->foreignId('occupant_id')->after('user_id')->constrained();
             $table->dropConstrainedForeignId('user_id');
         });
 
-        Schema::table('leases', function(Blueprint $table){
+        Schema::table('leases', function (Blueprint $table) {
             $table->foreignId('occupant_id')->after('user_id')->constrained();
             $table->dropConstrainedForeignId('user_id');
         });
 
-        Schema::table('service_requests', function(Blueprint $table){
+        Schema::table('service_requests', function (Blueprint $table) {
             $table->foreignId('occupant_id')->after('user_id')->constrained();
             $table->dropConstrainedForeignId('user_id');
         });
 
-        Schema::table('applicants', function(Blueprint $table){
+        Schema::table('applicants', function (Blueprint $table) {
             $table->foreignId('occupant_id')->nullable()->constrained();
         });
     }

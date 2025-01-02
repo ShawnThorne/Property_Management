@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Property;
+use App\Http\Controllers\PropertyController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -8,11 +8,6 @@ Route::get('/', function () {
     return Inertia::render('index');
 });
 
-Route::get('/properties', function () {
-
-    $properties = Property::all();
-
-    return Inertia::render('Properties', [
-        'properties' => $properties,
-    ]);
-});
+Route::get('/properties', [PropertyController::class, 'getAllProperties']);
+Route::get('/property/{id}', [PropertyController::class, 'getProperty']);
+Route::get('/apply/{id}', [PropertyController::class, 'apply']);

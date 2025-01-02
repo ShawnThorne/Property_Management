@@ -3,19 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\Applicant;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Set;
 use Filament\Forms\Get;
+use Filament\Forms\Set;
+use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Models\Applicant;
 
 class UserResource extends Resource
 {
@@ -41,7 +37,7 @@ class UserResource extends Resource
                 Forms\Components\Textarea::make('notes')
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('is_admin')
-                    ->live(onBlur:true)
+                    ->live(onBlur: true)
                     ->required(),
                 Forms\Components\Select::make('applicant_id')
                     ->relationship('applicant', 'name')
@@ -52,7 +48,7 @@ class UserResource extends Resource
                     ->hidden(fn (Get $get) => $get('is_admin'))
                     ->afterStateUpdated(function (?string $state, ?Set $set) {
                         $applicant = Applicant::find($state);
-                        if (!empty($applicant)) {
+                        if (! empty($applicant)) {
                             $set('name', $applicant->name);
                             $set('email', $applicant->email);
                             $set('phone', $applicant->phone);

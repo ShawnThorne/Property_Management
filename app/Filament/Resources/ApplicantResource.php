@@ -21,10 +21,10 @@ class ApplicantResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('properties')
-                ->label('Properties applicant is applying for')
-                ->multiple()
-                ->preload()
-                ->relationship('properties', 'name'),
+                    ->label('Properties applicant is applying for')
+                    ->multiple()
+                    ->preload()
+                    ->relationship('properties', 'name'),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -209,8 +209,8 @@ class ApplicantResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('properties.name')
-                ->numeric()
-                ->sortable(),
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')

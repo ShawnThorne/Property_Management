@@ -13,11 +13,9 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable implements FilamentUser
 {
-
     use SoftDeletes;
 
     public function canAccessPanel(Panel $panel): bool
@@ -50,7 +48,7 @@ class User extends Authenticatable implements FilamentUser
     protected $hidden = [
         'password',
         'remember_token',
-        'applicant_id'
+        'applicant_id',
     ];
 
     /**
@@ -73,7 +71,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function documents(): MorphMany
     {
-        return $this->morphMany(Document::class,'owner');
+        return $this->morphMany(Document::class, 'owner');
     }
 
     public function applicant(): BelongsTo
