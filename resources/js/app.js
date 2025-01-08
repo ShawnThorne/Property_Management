@@ -5,6 +5,7 @@ import { createInertiaApp } from '@inertiajs/vue3'
 import 'flowbite';
 import Layout from './Pages/Layout/Layout.vue';
 import '../../node_modules/flowbite-vue/dist/index.css'
+import '../../node_modules/flowbite-datepicker'
 
 createInertiaApp({
   resolve: name => {
