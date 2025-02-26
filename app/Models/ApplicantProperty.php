@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ApplicantProperty extends Model
 {
@@ -41,5 +42,10 @@ class ApplicantProperty extends Model
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);
+    }
+
+    public function previousRentals(): HasMany
+    {
+        return $this->hasMany(ApplicantPreviousRental::class);
     }
 }
