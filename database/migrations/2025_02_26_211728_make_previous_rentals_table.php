@@ -22,8 +22,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-
-        for($i = 1; $i < 5; $i++) {
+        for ($i = 1; $i < 5; $i++) {
             Schema::table('applicants', function (Blueprint $table) use ($i) {
                 $table->dropColumn("previous_rental_{$i}_name");
                 $table->dropColumn("previous_rental_{$i}_phone");
@@ -39,7 +38,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        for($i = 4; $i > 0; $i--) {
+        for ($i = 4; $i > 0; $i--) {
             Schema::table('applicants', function (Blueprint $table) use ($i) {
                 $table->date("previous_rental_{$i}_end_date")->nullable()->after('notes');
                 $table->date("previous_rental_{$i}_start_date")->nullable()->after('notes');

@@ -7,25 +7,28 @@ use Illuminate\Http\Request;
 
 class PropertyController extends Controller
 {
-    public function getAllProperties(Request $request) {
+    public function getAllProperties(Request $request)
+    {
 
         $properties = Property::all();
-    
+
         return inertia('Properties', [
             'properties' => $properties,
         ]);
     }
 
-    public function getProperty(Request $request, $id) {
+    public function getProperty(Request $request, $id)
+    {
 
         $property = Property::find($id);
-    
+
         return inertia('Property', [
             'property' => $property,
         ]);
     }
 
-    public function apply(Request $request, $id) {    
+    public function apply(Request $request, $id)
+    {
 
         $properties = Property::all();
 
