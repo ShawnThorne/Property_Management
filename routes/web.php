@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PropertyController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -11,3 +12,5 @@ Route::get('/', function () {
 Route::get('/properties', [PropertyController::class, 'getAllProperties']);
 Route::get('/property/{id}', [PropertyController::class, 'getProperty']);
 Route::get('/apply/{id}', [PropertyController::class, 'apply']);
+
+Route::post('/submit_applicant_form', [PropertyController::class, 'submitApplication']);

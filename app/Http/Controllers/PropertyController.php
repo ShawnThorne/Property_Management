@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Applicant;
 use App\Models\Property;
 use Illuminate\Http\Request;
 
@@ -36,5 +37,11 @@ class PropertyController extends Controller
             'selected' => $id,
             'properties' => $properties,
         ]);
+    }
+
+    public function submitApplication(Request $request)
+    {
+        $newApplicant = new Applicant();
+        $newApplicant->name = $request->name;
     }
 }
