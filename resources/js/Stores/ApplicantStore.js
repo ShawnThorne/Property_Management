@@ -23,7 +23,7 @@ export const useApplicantFormStore = defineStore('applicantForm',() => {
   const group_names = ref(null) ;
   const discovery_method = ref(null) ;
 
-  // driver's license and related infor
+  // driver's license and related info
   const driver_license_number = ref('') ;
   const driver_license_state = ref('') ;
   const owns_vehicle = ref(false) ;

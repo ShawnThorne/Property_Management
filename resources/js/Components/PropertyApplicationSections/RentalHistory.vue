@@ -29,7 +29,7 @@
           <hr class="mt-4">
         </div>
         <div @click="addPreviousRental" class="flex justify-center mt-4 cursor-pointer">
-          <div class="bg-blue-500 font-bold text-white flex p-2 px-4 rounded-lg">
+          <div class="bg-blue-600 hover:bg-blue-700 transition font-bold text-white flex p-2 px-4 rounded-lg">
             <svg class="w-6 h-6 mr-1 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
             </svg>
