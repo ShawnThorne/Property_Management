@@ -41,7 +41,7 @@ class PropertyController extends Controller
 
     public function submitApplication(Request $request)
     {
-        $newApplicant = new Applicant();
+        $newApplicant = new Applicant;
         $newApplicant->name = $request->name;
     }
 }
