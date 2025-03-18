@@ -28,7 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->brandName('Property Management')
             ->login()
-            ->registration()
+            ->registration(false)
             ->path('portal')
             ->colors([
                 'primary' => Color::Amber,
